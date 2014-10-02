@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Whack-A-Mole</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/jquery-ui.min.css">
+    <link rel="stylesheet" href="/css/whack.css">
+</head>
+<body>
+    <div id="page-wrap">
+        <div id="gameBoardWrap" class="container text-center">
+            <h1>Get 'em</h1>
+            <button id="startButton" class="btn btn-primary">GO!</button> 
+            <p id="scoreboard"></p>
+            <div id="gameBoard" class="col-md-12">
+                <div class="row">
+                    <div id="cell1" class="col-md-4 box">
+
+                    </div>
+                    <div id="cell2" class="col-md-4 box">
+
+                    </div>
+                    <div id="cell3" class="col-md-4 box">
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div id="cell4" class="col-md-4 box">
+
+                    </div>
+                    <div id="cell5" class="col-md-4 box">
+
+                    </div>
+                    <div id="cell6" class="col-md-4 box">
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div id="cell7" class="col-md-4 box">
+
+                    </div>
+                    <div id="cell8" class="col-md-4 box">
+
+                    </div>
+                    <div id="cell9" class="col-md-4 box">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- jQuery -->
+<script src="js/jquery-1.11.1.js"></script>
+<script src="js/jquery-ui.min.js"></script>
+<script>
+    $(document).ready(function() {
+        var gameTime;
+        var score;
+        var popupInterval;
+        var popupTimeout;
+        
+        // FUNCTION TO DISABLE THE START BUTTON
+        var disableStartButton = function() {
+            $("#startButton").attr("disabled", "disabled");
+        }
+        
+        // FUNCTION TO ENABLE THE START BUTTON
+        var enableStartButton = function() {
+            $("#startButton").removeAttr("disabled");
+        }
+        
+        // FUNCTION TO INCREMENT THE SCORE BY ONE
+        var incrementScore = function(score) {
+            score++;
+            return score;
+        }
+        
+        // FUNCTION TO GENERATE A RANDOM INT BETWEEN 1 - 9
+        var getRandomInt = function() {
+            return Math.floor(Math.random() * 9) + 1;
+        }
+        
+        // FUNCTION TO APPEND MOLE IMAGE TO A RANDOM BOX
+        var showRandomMole = function(boxId) {
+            $("<img id='mole' src='/img/bale.png' alt='bale mole'>").appendTo("#cell" + boxId).hide().fadeIn();
+        }
+        
+        // FUNCTION TO HIDE THE MOLE
+        var hideMole = function() {
+            $("#mole").fadeOut().remove();
+        }
+        
+        // FUNCTION TO EXPLODE THE MOLE WHEN CLICKED
+        var explodeMole = function() {
+            $("#mole").hide('explode', 1000)
+            $("#mole").remove();
+            console.log('killed him');
+            console.log(popupInterval);
+        }
+        
+        $("#startButton").click(function() {
+            // START GAME WITH SCORE AT ZERO
+            score = 0;
+            
+            // WHEN GAME STARTS, DISABLE THE START BUTTON
+            disableStartButton();
+            popupInterval = setInterval(function() {
+                
+                // GET A RANDOM NUMBER
+                var boxId = getRandomInt();
+                // SHOW MOLE IN THE RANDOM MOLE CELL
+                showRandomMole(boxId);
+                
+                $(".box").on("click","img", function() {
+                    explodeMole();
+                });
+            }, 3000);
+        });
+    });
+</script>
+</body>
+</html>
