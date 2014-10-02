@@ -1,0 +1,21 @@
+img {
+    max-height: 198px;
+}
+
+#gameBoard {
+    cursor: url(/img/axe.png), auto;
+    margin: 0 5%;
+}
+
+.box {
+    background-image: url('/img/allen.jpg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    border: 1px solid #000;
+    width: 30%;
+    min-height: 200px;
+}
+
+#startButton {
+    margin-bottom: 10px;
+}
